@@ -1,0 +1,42 @@
+name: CI/CD Pipeline - Mini ERP + CRM Operations Portal
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    name: Build & Validate Full Stack Project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+
+      - name: Build Frontend Application
+        run: npm run build
+
+      - name: Install Backend Dependencies
+        run: |
+          cd server
+          npm ci
+
+      - name: Build Backend TypeScript API
+        run: |
+          cd server
+          npm run build
+
+      - name: Docker Build Test
+        run: |
+          docker build -t mini-erp-crm:latest .

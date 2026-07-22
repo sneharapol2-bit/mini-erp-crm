@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "a8c903ef-3d84-4e2b-a192-placement-drive",
+		"name": "Mini ERP + CRM Operations Portal APIs",
+		"description": "Postman API Collection for Placement Drive Evaluation. Includes Auth, Customers CRM, Products Stock, and Sales Challans with stock validation.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Authentication",
+			"item": [
+				{
+					"name": "POST Login - Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@company.com\",\n  \"role\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "auth", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Customer CRM Module",
+			"item": [
+				{
+					"name": "GET All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/customers?type=Wholesale",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "customers"],
+							"query": [
+								{
+									"key": "type",
+									"value": "Wholesale"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "POST Add New Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Rajiv Mehta\",\n  \"mobile\": \"+91 98112 34567\",\n  \"email\": \"rajiv@mehtatraders.com\",\n  \"businessName\": \"Mehta Hardware & Tools\",\n  \"type\": \"Distributor\",\n  \"address\": \"Sector 62, Noida, UP\",\n  \"status\": \"Lead\",\n  \"notes\": \"Initial inquiry for bulk stock.\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/customers",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "customers"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Products & Stock Module",
+			"item": [
+				{
+					"name": "GET Catalog Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "products"]
+						}
+					}
+				},
+				{
+					"name": "POST Add Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Digital Oscilloscope 100MHz\",\n  \"sku\": \"OSC-100MHZ-DIG\",\n  \"category\": \"Test Equipment\",\n  \"unitPrice\": 18500,\n  \"currentStock\": 12,\n  \"minStockAlert\": 3,\n  \"warehouseLocation\": \"Vault A-1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "products"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Sales Challan Module",
+			"item": [
+				{
+					"name": "POST Generate Sales Challan (Confirmed with Stock Reduction)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerId\": \"cust_1\",\n  \"items\": [\n    {\n      \"productId\": \"prod_1\",\n      \"quantity\": 5\n    }\n  ],\n  \"status\": \"Confirmed\",\n  \"createdBy\": \"Priya Sharma\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/challans",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5000",
+							"path": ["api", "challans"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
