@@ -83,6 +83,22 @@ const authenticateJWT = (req: Request, res: Response, next: any) => {
   }
 };
 
+// Health & API Index
+app.get(['/', '/api'], (req: Request, res: Response) => {
+  res.json({
+    status: 'online',
+    service: 'Mini ERP + CRM Operations Portal API',
+    version: '1.0.0',
+    documentation: 'See README.md or use the built-in REST API Tester in the web app',
+    endpoints: {
+      auth: 'POST /api/auth/login',
+      customers: 'GET /api/customers, POST /api/customers',
+      products: 'GET /api/products, POST /api/products',
+      challans: 'GET /api/challans, POST /api/challans, POST /api/challans/:id/confirm'
+    }
+  });
+});
+
 // 1. Auth Endpoint
 app.post('/api/auth/login', (req: Request, res: Response) => {
   const { email, role } = req.body;
